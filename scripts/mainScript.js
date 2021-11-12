@@ -6,6 +6,7 @@ const loadUserData = event => {
 
 const displayUserData = userData => {
     const userDataElement = document.createElement('div');
+    userDataElement.setAttribute("class", "line-element");
     userDataElement.innerText = `Име: ${userData.name}, възраст ${userData.age}, любим спорт ${userData.favouriteSport}`;
     document.getElementById('userData').appendChild(userDataElement);
 }
