@@ -61,20 +61,17 @@ const displayErrors = errorMessages => {
 
 const sendRegisterDataToServer = data => {
     
-    // fetch('/register.php', {
-    //     method: 'POST',
-    //     body: JSON.stringify(data)
-    // })
-    // .then(response => response.json())
-    // .then(handleRegisterResponse);
+    fetch('./register.php', {
+        method: 'POST',
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(handleRegisterResponse);
 
-    fetch('./registerSuccessful.json')
-        .then(response => response.json())
-        .then(handleRegisterResponse);
 }
 
 const handleRegisterResponse = response => {
-    console.log(response.success);
+    console.log(response);
 }
 
 document.querySelector('#register-container form').addEventListener('submit', onSubmit);
