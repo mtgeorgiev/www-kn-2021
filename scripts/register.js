@@ -61,7 +61,7 @@ const displayErrors = errorMessages => {
 
 const sendRegisterDataToServer = data => {
     
-    fetch('./register.php', {
+    fetch('./endpoints/user.php', {
         method: 'POST',
         body: JSON.stringify(data)
     })
