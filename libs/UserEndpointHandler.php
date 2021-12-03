@@ -21,15 +21,32 @@ class UserEndpointHandler {
         return (new UserRepository())->insert($user);
     }
 
-    public static function get() {
+    public static function getOne(): User {
         
     }
 
-    public static function update() {
-        
+    
+    public static function getAll(): array {
+        // TODO move to UserRepository    
+        $conn  = new PDO('mysql:host=localhost;dbname=www_kn_2021', 'root', '');
+
+        $sql   = "SELECT * FROM users";
+
+        $query = $conn->query($sql);
+
+        $allUsers = [];
+        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+            $allUsers[] = User::createFromDbResponse($row);
+        }
+
+        return $allUsers;
     }
 
-    public static function delete() {
+    public static function update(): User {
+
+    }
+
+    public static function delete(): void {
         
     }
 

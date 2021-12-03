@@ -4,13 +4,26 @@ class UserRepository {
 
     public function insert(User $user): User {
 
+        $conn = (new Db())->getConnection();
+
+        $insertStatement = $conn->prepare("
+            INSERT INTO users (email, password)
+            VALUES (:email, :password)
+        ");
+
         // inserts the user into the db
-        $id = 12;
-        $user->setId($id);
+        $insertSuccessful = $insertStatement->execute([
+            'email' => $user->getEmail(),
+            'password' => $user->getPassword(),
+        ]);
 
-        // throw new RepositoryException("testing exception 2");
+        if ($insertSuccessful) {
+            $user->setId($conn->lastInsertId());
+            return $user;
+        } else {
+            throw new RepositoryException($insertStatement->errorInfo()[2]);
+        }
 
-        return $user;
     }
 
 }

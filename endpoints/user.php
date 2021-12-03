@@ -11,6 +11,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
     }
     case 'GET': { // read
+        $allUsers = UserEndpointHandler::getAll();
+        $formattedUsers = [];
+        foreach ($allUsers as $user) {
+            $formattedUsers[] = $user->toArray();
+        }
+        echo json_encode($formattedUsers);
         break;
     }
     case 'PUT': { // update

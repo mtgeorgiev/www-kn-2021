@@ -10,21 +10,32 @@ class User {
 
     private $password;
 
-    public function __construct(string $email, string $password) {
+    private $registeredOn;
+
+    public function __construct(string $email, string $password, string $registeredOn = null) {
         $this->email = $email;
         $this->password = $password;
+        $this->registeredOn = $registeredOn;
     }
 
     public function getEmail(): string  {
         return $this->email;
     }
 
+    public function getPassword(): string  {
+        return $this->password;
+    }
+
     public function getId(): int {
         return $this->id;
     }
 
-    public function setId(int $id) {
-        $this->id = $id;
+    public function setId($id) {
+        $this->id = (int)$id;
+    }
+
+    public function getRegisteredOn(): ?string {
+        return $this->registeredOn;
     }
 
     public function toArray(): array {
@@ -32,8 +43,17 @@ class User {
         return [
             'id' => $this->getId(),
             'email' => $this->getEmail(),
+            'registeredOn' => $this->getRegisteredOn(),
         ];
 
+    }
+
+    public static function createFromDbResponse($row): User {
+
+        $user = new User($row['email'], $row['password'], $row['registered_on']);
+        $user->setId($row['id']);
+
+        return $user;
     }
 
 }
