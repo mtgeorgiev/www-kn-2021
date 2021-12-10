@@ -1,0 +1,9 @@
+#users-list>div {
+    margin: 5px;
+    background-color: aliceblue;
+    padding: 5px;
+    box-shadow: -2px 3px #8daac1;
+    border-radius: 3px;
+    border: solid 1px#8daac1;
+    color: #135081;
+}
