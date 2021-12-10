@@ -18,7 +18,7 @@ class UserEndpointHandler {
 
         // check if the user is valid
 
-        return (new UserRepository())->insert($user);
+        return UserRepository::insert($user);
     }
 
     public static function getOne(): User {
@@ -27,19 +27,7 @@ class UserEndpointHandler {
 
     
     public static function getAll(): array {
-        // TODO move to UserRepository    
-        $conn  = new PDO('mysql:host=localhost;dbname=www_kn_2021', 'root', '');
-
-        $sql   = "SELECT * FROM users";
-
-        $query = $conn->query($sql);
-
-        $allUsers = [];
-        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-            $allUsers[] = User::createFromDbResponse($row);
-        }
-
-        return $allUsers;
+        return UserRepository::fetchAll();
     }
 
     public static function update(): User {

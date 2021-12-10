@@ -59,19 +59,43 @@ const displayErrors = errorMessages => {
     errorMessageContainer.setAttribute('style', 'display:block');
 }
 
+const displaySuccessMessage = message => {
+
+    const successMessageContainer = document.getElementById('success-message');
+
+    const element = document.createElement('div');
+    const text = document.createTextNode(message);
+    element.appendChild(text);
+       
+    successMessageContainer.appendChild(element);
+
+    successMessageContainer.setAttribute('style', 'display:block');
+}
+
 const sendRegisterDataToServer = data => {
     
     fetch('./endpoints/user.php', {
         method: 'POST',
         body: JSON.stringify(data)
     })
-    .then(response => response.json())
-    .then(handleRegisterResponse);
+    .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error();
+        }
+      })
+    .then(handleRegisterSucceessful)
+    .catch(handlerRegisterFailed);
 
 }
 
-const handleRegisterResponse = response => {
-    console.log(response);
+const handleRegisterSucceessful = response => {
+    displaySuccessMessage(`Успешно регистриран потребител "${response.email}" с ID ${response.id}`);
+}
+
+const handlerRegisterFailed = () => {
+    displayErrors(["Неуспешна регистрация"]);
 }
 
 document.querySelector('#register-container form').addEventListener('submit', onSubmit);

@@ -2,7 +2,7 @@
 
 class UserRepository {
 
-    public function insert(User $user): User {
+    public static function insert(User $user): User {
 
         $conn = (new Db())->getConnection();
 
@@ -23,7 +23,22 @@ class UserRepository {
         } else {
             throw new RepositoryException($insertStatement->errorInfo()[2]);
         }
+    }
 
+    public static function fetchAll(): array {
+
+        $conn = (new Db())->getConnection();
+
+        $sql   = "SELECT * FROM users";
+
+        $query = $conn->query($sql);
+
+        $allUsers = [];
+        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+            $allUsers[] = User::createFromDbResponse($row);
+        }
+
+        return $allUsers;
     }
 
 }

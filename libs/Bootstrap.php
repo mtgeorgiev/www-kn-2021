@@ -10,15 +10,22 @@ class Bootstrap {
     private static function registerExceptionHandlers() {
         set_exception_handler(function ($e) {
 
+            $errorCode = 500;
+
             $error = [
                 'error' => true
             ];
 
             if ($e instanceof RepositoryException) {
                 $error['message'] = 'Exception with database operation: ' . $e->getMessage();
+                $errorCode = 500;
             }
+            // elseif ($e instanceof BadRequestException) {
+            //     $errorCode = 400;
+            // }
 
             echo json_encode($error);
+            http_response_code($errorCode);
         });
     }
 
