@@ -34,7 +34,7 @@ class UserRepository {
         $query = $conn->query($sql);
 
         $allUsers = [];
-        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+        while ($row = $query->fetch()) {
             $allUsers[] = User::createFromDbResponse($row);
         }
 
