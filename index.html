@@ -2,9 +2,13 @@
     <head>
         <meta charset="UTF-8" />
         <title>Начална страница</title>
+        <script src="./scripts/index.js" defer></script>
+        <link href="./styles/index.css" rel="stylesheet" />
     </head>
     <body>
-        <div><a href="register.html">Регистрация</a></div>
-        <div><a href="users.html">Списък на регистрираните потребители</a></div>
+        <div class="not-logged"><a href="login.html">Влизане</a></div>
+        <div class="not-logged"><a href="register.html">Регистрация</a></div>
+        <div class="logged"><a href="users.html">Списък на регистрираните потребители</a></div>
+        <div class="logged"><input type="button" id="logout-button" value="Излез!" /></div>
     </body>
 </html>

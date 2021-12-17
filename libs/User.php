@@ -26,6 +26,10 @@ class User {
         return $this->password;
     }
 
+    public function getHashedPassword(): string {
+        return password_hash($this->password, PASSWORD_DEFAULT);
+    }
+
     public function getId(): int {
         return $this->id;
     }

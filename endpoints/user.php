@@ -11,6 +11,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
     }
     case 'GET': { // read
+
+        if (!SessionEndpointHandler::getLoginStatus()) {
+            throw new AuthenticationException("Нямате достъп до този ресурс");
+        }
+
         $allUsers = UserEndpointHandler::getAll();
         $formattedUsers = [];
         foreach ($allUsers as $user) {

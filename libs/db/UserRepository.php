@@ -11,10 +11,11 @@ class UserRepository {
             VALUES (:email, :password)
         ");
 
+        $hashedPassword = $user->getHashedPassword();
         // inserts the user into the db
         $insertSuccessful = $insertStatement->execute([
             'email' => $user->getEmail(),
-            'password' => $user->getPassword(),
+            'password' => $hashedPassword,
         ]);
 
         if ($insertSuccessful) {
@@ -39,6 +40,23 @@ class UserRepository {
         }
 
         return $allUsers;
+    }
+
+    public static function fetchByEmail(string $email): ?User {
+
+        $conn = (new Db())->getConnection();
+
+        $selectStatement = $conn->prepare("SELECT * FROM users WHERE email = :email");
+
+        $selectStatement->execute(['email' => $email]);
+
+        $userData = $selectStatement->fetch();
+
+        if ($userData) {
+            return User::createFromDbResponse($userData);
+        }
+
+        return null;
     }
 
 }

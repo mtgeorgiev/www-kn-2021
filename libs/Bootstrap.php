@@ -20,9 +20,9 @@ class Bootstrap {
                 $error['message'] = 'Exception with database operation: ' . $e->getMessage();
                 $errorCode = 500;
             }
-            // elseif ($e instanceof BadRequestException) {
-            //     $errorCode = 400;
-            // }
+            elseif ($e instanceof AuthenticationException) {
+                $errorCode = 401;
+            }
 
             echo json_encode($error);
             http_response_code($errorCode);
