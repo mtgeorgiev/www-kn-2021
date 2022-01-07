@@ -10,7 +10,9 @@ const checkLoginStatus = () => {
       }
     })
   .then(handleLoginStatusResponse)
-  .catch(console.log('login status check failed'));
+  .catch(() => {
+    console.log('login status check failed');
+  });
 };
 
 const handleLoginStatusResponse = loginStatusResponse => {
@@ -38,8 +40,21 @@ const logout = () => {
     })
     .catch(() => console.log('error'));
   
-  }
+}
+
+const loadSiteName = () => {
+
+  fetch('./endpoints/siteInfo.php?key=name')
+    .then(response => response.json())
+    .then(displaySiteName);
+}
+
+const displaySiteName = ({value}) => {
+  document.title = value;
+}
 
 document.getElementById('logout-button').addEventListener('click', logout);
 
 checkLoginStatus();
+
+loadSiteName();

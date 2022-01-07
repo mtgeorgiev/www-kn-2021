@@ -23,6 +23,14 @@ class Bootstrap {
             elseif ($e instanceof AuthenticationException) {
                 $errorCode = 401;
             }
+            elseif ($e instanceof NotFoundException) {
+                $error['message'] = $e->getMessage();
+                $errorCode = 404;
+            }
+            elseif ($e instanceof BadRequestException) {
+                $error['message'] = $e->getMessage();
+                $errorCode = 400;
+            }
 
             echo json_encode($error);
             http_response_code($errorCode);
