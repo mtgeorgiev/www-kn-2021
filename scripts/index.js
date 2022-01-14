@@ -1,32 +1,34 @@
 
-const checkLoginStatus = () => {
+const loginStatusMethods = {
+  checkLoginStatus: () => {
 
-  fetch('./endpoints/session.php')
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error();
-      }
-    })
-  .then(handleLoginStatusResponse)
-  .catch(() => {
-    console.log('login status check failed');
-  });
-};
+    fetch('./endpoints/session.php')
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error();
+        }
+      })
+    .then(loginStatusMethods.handleLoginStatusResponse)
+    .catch(() => {
+      console.log('login status check failed');
+    });
+  },
 
-const handleLoginStatusResponse = loginStatusResponse => {
+  handleLoginStatusResponse: loginStatusResponse => {
 
-  if (loginStatusResponse.loginStatus) {
-    // logged
-    document.querySelectorAll('.logged')
-      .forEach(element => element.style="display: block");
-  } else {
-    // not logged
-    document.querySelectorAll('.not-logged')
-      .forEach(element => element.style="display: block");
+    if (loginStatusResponse.loginStatus) {
+      // logged
+      document.querySelectorAll('.logged')
+        .forEach(element => element.style="display: block");
+    } else {
+      // not logged
+      document.querySelectorAll('.not-logged')
+        .forEach(element => element.style="display: block");
+    }
+  
   }
-
 };
 
 const logout = () => {
@@ -55,6 +57,6 @@ const displaySiteName = ({value}) => {
 
 document.getElementById('logout-button').addEventListener('click', logout);
 
-checkLoginStatus();
+loginStatusMethods.checkLoginStatus();
 
 loadSiteName();
